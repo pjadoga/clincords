@@ -1,4 +1,4 @@
-# vuetify-app
+# ClinCords
 
 ## Project setup
 ```
