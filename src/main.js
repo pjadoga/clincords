@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import firebase from '@/firebase'
 import colors from 'vuetify/es5/util/colors'
+// import { tns } from "./node_modules/tiny-slider/src/tiny-slider"
+import { tns } from "tiny-slider"
+
 
 // Vue.use(Vuetify, {
 //   theme: {

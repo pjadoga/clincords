@@ -47,7 +47,7 @@
       class=" pt-2"
         >
         <!-- add class="hidden-sm-and-up" later -->
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" class=" "></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase ">
         <v-layout> 
           <v-flex
@@ -77,21 +77,21 @@
               v-for ="(menu, i) in menus.filter(item => item.main )" 
               :key = 'i' 
               :to= "menu.url"
-              v-on="on"
+              v-on= "on"
             >
               <v-icon medium color="orange">{{menu.icon}}</v-icon>
                 {{menu.tag}} 
             </v-btn>
           </template>
-          <v-list>
+          <!-- <v-list>
             <v-list-tile
-              v-for ="men in menus.filter(item =>item.sub)" 
-              :key = 'men.ta.subtag' 
-              @click= "men.ta.url"
+              v-for ="menu in menus.filter(item =>item.main)" 
+              :key = 'menu.tag' 
+              @click= "menu.url"
             >
               <v-list-tile-title>{{ men.ta.subtag }}</v-list-tile-title>
             </v-list-tile>
-          </v-list>
+          </v-list> -->
           </v-menu>
 <!-- A badge is included here -->
           <v-badge overlap >
@@ -110,22 +110,25 @@
 
     <v-layout
     light
-    class=" pt-4 mt-5 red lighten-5 elevation-0"
+    class=" pt-4 mt-5 white lighten-4 elevation-0"
     >
-    
-      <v-flex class="subheading pl-2">Get connected with us on:</v-flex>
-      <v-spacer></v-spacer>
-      <v-btn
-        v-for = "icon in icons"
-        :key = "icon.name"
-        class="mr-4  light-blue--text"
-        dark
-        icon
-        round
-        :to = "icon.name"
-      >
-        <v-icon size="24px">{{ icon.icon }}</v-icon>
-      </v-btn>
+    <v-card flat>
+      <v-card-actions class="subheading pl-2">Connected with us on:</v-card-actions>
+       
+        <v-card-title>
+          <v-btn
+            v-for = "icon in icons"
+            :key = "icon.name"
+            class="mr-4  light-blue--text"
+            dark
+            icon
+            round
+            :to = "icon.name"
+          >
+            <v-icon size="24px">{{ icon.icon }}</v-icon>
+          </v-btn>
+        </v-card-title>
+      </v-card>
     </v-layout>
      <v-slider
           xs10
@@ -189,12 +192,7 @@ export default {
       menus:[
           {tag: 'Home',          url:'/',              icon:'home',    main:true, left:true},
           {tag: 'Contact Us',    url:'/contact',       icon:'', main:true, foot:true},
-          {tag: 'About Us', 
-          ta:[
-            {subtag: 'Our Vision', url: ''},
-            {subtag: 'Our Mission', url: ''},
-            {subtag: 'Our History', url: ''}
-          ],                     url:'/about',         icon:'',        main:true, foot:true, sub: true},
+          {tag: 'About Us',      url:'/about',         icon:'',        main:true, foot:true,},
           {tag: 'Posts',         url:'/posts',         icon:'add', main:true, left:true},
           {tag: 'Reference',     url:'/ref',           icon:'',        main:true},
           {tag: 'Affiliates',    url:'/affiliates',    icon:'',        main:true, foot:true},
