@@ -150,28 +150,21 @@
 							</v-flex>
 					</v-flex>
 			</v-layout>
-			<v-layout>
-					<v-form name="contact" method="POST" data-netlify="true">
-						<p>
-							<label>Your Name: <input type="text" name="name" /></label>   
-						</p>
-						<p>
-							<label>Your Email: <input type="email" name="email" /></label>
-						</p>
-						<p>
-							<label>Your Role: <select name="role[]" multiple>
-								<option value="leader">Leader</option>
+			
+				<v-card flat class=" grey"  >
+					<v-form name="contact" method="POST" data-netlify="true" class=" justify-center">
+					 <v-text-field type="text" name="name" placeholder="Your Name"/>
+							 <v-text-field box inverted type="email" name="email" placeholder="Your Email" />
+						<v-select name="role[]" multiple placeholder="">
+								<selections value="leader">Leader</selections>
 								<option value="follower">Follower</option>
-							</select></label>
-						</p>
-						<p>
-								<label>Message: <textarea name="message"></textarea></label>
-						</p>
-						<p>
-								<button type="submit">Send</button>
-						</p>
+							</v-select>
+							<v-text-field name= 'message' placeholder="Your Message"></v-text-field>
+							<v-text-field placeholder="Date of birth" type=" date-picker" class=" v-date-picker-table--date"></v-text-field>
+								<v-btn type="submit">Send</v-btn>
 						</v-form>
-			</v-layout>
+						</v-card>
+		
 	</v-container>
 </template>
 <script>

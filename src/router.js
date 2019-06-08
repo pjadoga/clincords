@@ -23,16 +23,11 @@ Vue.use(Router)
 
 export default new Router({
     routes: [
-        {path: '/',             name: 'home', component: Home },
+        {path: '/',             name: 'home',           component: Home },
         {path: '/posts',        redirect: '/signin'},
-        {path: '/contact',      name: 'contact', component: Contact },
-        {path: '/ref',          name: 'ref', component: Ref },
-        {path: '/about',        name: 'about',
-      // component: About
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-       component: About},
+        {path: '/contact',      name: 'contact',        component: Contact },
+        {path: '/ref',          name: 'ref',            component: Ref },
+        {path: '/about',        name: 'about',          component: About},
        {path: '/affiliates',    name: 'affiliates',     component: Affiliates },
        {path: '/signup',        name: 'signup',         component: SignUp },
        {path: '/signin',        name: 'signin',         component: SignIn },
@@ -49,13 +44,14 @@ export default new Router({
     ],
     mode: 'history'
 })
-let router = new Router
-router.beforeEach((to, _from, next) => {
+export const router = new Router
+
+router.beforeEach((to, from, next) => {
 	const currentUser = firebase.auth().currentUser
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 	if (requiresAuth && !currentUser){
 			next('signin')
-	} else if (!requiresAuth && currentUser) {
+	} else if (requiresAuth && currentUser) {
 			next('posts')
 	} else {
 			next()

@@ -17,19 +17,17 @@
                             color="primary"
                             type="text-box" 
                             name="email" 
-                            v-model="email" 
-                            placeholder="Input Email Address *"
+                            v-model.trim = "signinForm.email" 
+                            placeholder = "Input Email Address *"
                             solo-inverted
-                            tooltip="insert username"
-                            class="input"
+                            tooltip = "insert username"
+                            class = "input"
                             required>
                             </v-text-field>
-                        </v-card-text>
-                        <v-card-text>
                             <v-text-field 
 															type="password" 
 															name="password" 
-															v-model="password"
+															v-model.trim = "signinForm.password"
 															class="input"
 															placeholder="Input Password *"
 															solo-inverted
@@ -38,7 +36,7 @@
 														<v-btn 
 															type="submit" 
 															@click.native ="signIn()"
-															:loading = "loading" 
+															:loading = "submit" 
 															class =" white--text indigo right" 
 															active-class 
 														>
@@ -46,14 +44,18 @@
                         		</v-btn>
 														<v-btn 
 															tag="div" 
-															type="submit" 
+															type="reset" 
 															@click.native ="reset()" 
 															class=" indigo--text white"
 														>
 															Reset
 														</v-btn>
-														<v-card tag="p" >New Here? <router-link to="/signup" class=" text--white">
-                        	Create a new account</router-link></v-card>
+														<v-card flat color='transparent' >
+                              <p>New Here? <router-link to="/signup" class=" text--white">
+                        	Create a new account</router-link></p>
+                          <p>Forgot password? <router-link to="/signup" class=" text--white">
+                        	Reset now</router-link></p>
+                          </v-card>
 												</v-card-text>                        
                     </v-card>
                 </v-form>
@@ -62,27 +64,33 @@
     </v-container>
 </template>
 <script>
-import firebase from 'firebase'
+import fb from '../../firebase.js'
 export default {
     name:'signin',
     data:()=>({
-        email: '',
-        password: '',
-        submit:false,
-        loading:false
+      signinForm: {
+          email: '',
+          password: ''
+      },
+      submit:false
     }),
     
     methods: {
       signIn () {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
-          this.$router.replace('/posts')
+        this.submit=true
+        firebase.auth().signInWithEmailAndPassword(this.signinForm.email, this.signinForm.password).then((user) => {
+          this.$store.commit('setCurrentUser', user.user)
+          // .replace('/posts')
+          this.submit = false
+          this.$store.dispatch('fetchUserProfile')
+          this.$router.push('/posts')
         }).catch((error) => {
           alert(error.message)
+          this.submit = false
         });
-          this.loading=true
       },   
         reset(){
-          let clear = confirm('do you want to clear your info?');
+          let clear = confirm('Sure to clear info?');
           if(clear){
               this.email = ''
               this.password = ''
@@ -95,3 +103,11 @@ export default {
     
 }
 </script>
+<style scoped>
+a{
+  color: tomato;
+  text-decoration: none;
+  text-anchor: start
+}
+
+</style>

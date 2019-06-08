@@ -2,12 +2,11 @@
   <v-app >
     <!-- add class="hidden-sm-and-up" later -->
     <v-navigation-drawer
-      v-model="drawer"
+      v-model= "drawer"
       hide-overlay
       app
       fixed
       temporary
-      
     >
       <v-list 
         dense 
@@ -16,7 +15,6 @@
         <v-card dark flat color="blue-grey">
           <v-card-title  class="headline">
             <v-avatar
-
               :size="60"
               color="grey lighten-4"
             >
@@ -26,10 +24,11 @@
           </v-card-title>
         </v-card>
         <v-list-tile 
-        v-for="item in menus.filter(item => item.left)" 
-        :key="item.tag"
-        router
-        :to="item.url">
+          v-for= "item in menus.filter(item => item.left)" 
+          :key= "item.tag"
+          router
+          :to= "item.url"
+        >
           <v-list-tile-action>
             <v-icon medium color="blue">{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -45,7 +44,7 @@
       dark
       app
       class=" pt-2"
-        >
+    >
         <!-- add class="hidden-sm-and-up" later -->
       <v-toolbar-side-icon @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
       <v-toolbar-title class="text-uppercase ">
@@ -56,7 +55,7 @@
           >
             <v-card  flat color="transparent" :to = "'/'" hover >
               <v-avatar tile>
-              <v-img :src="require('./assets/ccnobg.png')"> </v-img>
+                <v-img :src="require('./assets/ccnobg.png')"> </v-img>
               </v-avatar>
               <span 
                 class=" red--text font-weight-bold  headline "
@@ -73,25 +72,16 @@
           <template v-slot:activator= "{ on }">
             <v-btn 
               flat 
-              :style = "color='button'" 
+              :style ="color='button'" 
               v-for ="(menu, i) in menus.filter(item => item.main )" 
               :key = 'i' 
               :to= "menu.url"
               v-on= "on"
             >
-              <v-icon medium color="orange">{{menu.icon}}</v-icon>
-                {{menu.tag}} 
+            <v-icon medium color="orange">{{menu.icon}}</v-icon>
+              {{menu.tag}} 
             </v-btn>
           </template>
-          <!-- <v-list>
-            <v-list-tile
-              v-for ="menu in menus.filter(item =>item.main)" 
-              :key = 'menu.tag' 
-              @click= "menu.url"
-            >
-              <v-list-tile-title>{{ men.ta.subtag }}</v-list-tile-title>
-            </v-list-tile>
-          </v-list> -->
           </v-menu>
 <!-- A badge is included here -->
           <v-badge overlap >
@@ -104,17 +94,15 @@
               <v-icon dark>notifications</v-icon>
             </v-avatar>
           </v-badge>
-        
       </v-toolbar-items>
     </v-toolbar>
 
     <v-layout
-    light
-    class=" pt-4 mt-5 white lighten-4 elevation-0"
+      light
+      class=" pt-4 mt-5 white lighten-4 elevation-0 hidden-xs-only"
     >
-    <v-card flat>
+    <v-card flat width="30%">
       <v-card-actions class="subheading pl-2">Connected with us on:</v-card-actions>
-       
         <v-card-title>
           <v-btn
             v-for = "icon in icons"
@@ -129,7 +117,25 @@
           </v-btn>
         </v-card-title>
       </v-card>
+      <v-divider class=" v-divider--vertical blue"/>
+      <v-card flat width= "70%" class=" ">
+        <v-layout>
+          <v-slider
+            xs10
+            v-model = "slider"
+            :min= "18"
+            :max= "120"
+            label= "Age"
+            thumb-label
+          >
+          </v-slider>
+        </v-layout>
+        <v-layout justify-center class=" orange lighten-5 headline">
+          <span class=" blue--text">{{slider}}</span>
+        </v-layout>
+      </v-card>
     </v-layout>
+    <!-- <v-layout>
      <v-slider
           xs10
           v-model = "slider"
@@ -140,20 +146,16 @@
       >
       </v-slider>
       <span class=" blue--text">{{slider}}</span>
-  
+    </v-layout> -->
     <v-content >
       <router-view></router-view>
     </v-content>
 
-    <v-footer 
-      height="auto" 
-    >
-      <v-card 
-      min-width= "100%"
-      >
+    <v-footer height="auto">
+      <v-card min-width= "100%">
         <v-card-title
-        class=" blue-grey lighten-1 justify-center font-weight-bold lime--text "
-        dark
+          class=" blue-grey lighten-1 justify-center font-weight-bold lime--text "
+          dark
         >
           <v-btn 
             :style="color='button'"
@@ -168,17 +170,17 @@
             {{menu.tag}}
           </v-btn> 
         </v-card-title>
-
-    <v-card-actions class=" lighten-3 blue-grey justify-center">
-     &copy; {{myDate()}}— <strong> {{myApp}}</strong>
-    
-      </v-card-actions>
+        <v-card-actions class=" lighten-3 blue-grey justify-center">
+          &copy; {{myDate()}}— <strong> {{myApp}}</strong>
+        </v-card-actions>
       </v-card>
-      </v-footer>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+// const fb = require('./firebase.js')
 export default {
   name: 'App',
   data () {
@@ -205,17 +207,16 @@ export default {
           {tag: 'Facebook',      url:'/facebook',      icon:'',        foot:true},
           {tag: 'Twitter',       url:'/twitter',       icon:'',        foot:true},
           {tag: 'Notifications', url:'/notifications', icon:'notifications', left:true},
-          {tag: null,              url:'/notifications', icon:'notifications', main:true, user:true},
+          {tag:  null,           url:'/notifications', icon:'notifications', main:true, user:true},
           {tag: 'Users',         url:'/users',         icon:'people',  left:true},
-          {tag: null,       url:'/profile',       icon:'people',  main:true, user:true},
-
+          {tag:  null,           url:'/profile',       icon:'people',  main:true, user:true},
       ],
       icons: [
-        {name: 'facebook', icon: 'fab fa-facebook'},
-        {name: 'twitter', icon: 'fab fa-twitter'},
+        {name: 'facebook',    icon: 'fab fa-facebook'},
+        {name: 'twitter',     icon: 'fab fa-twitter'},
         {name: 'google-plus', icon: 'fab fa-google-plus'},
-        {name: 'linkedIn', icon: 'fab fa-linkedin'},
-        {name: 'instagram', icon: 'fab fa-instagram'}
+        {name: 'linkedIn',    icon: 'fab fa-linkedin'},
+        {name: 'instagram',   icon: 'fab fa-instagram'}
       ]
     }
   },
@@ -226,6 +227,9 @@ export default {
     
   }
   },
+  // computed:{
+  //   ...mapState(['currentUser'])
+  // },
     props: {
     source: String
     }
